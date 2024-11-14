@@ -1,27 +1,27 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&family=Roboto:wght@400;700&display=swap');
 
 :root {
   --background: #ffffff;
   --foreground: #171717;
 }
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+div:focus, span:focus, p:focus, h1:focus, h2:focus, h3:focus, h4:focus {
+  outline: 1px solid #181C14;
+  outline-offset: 0px;
+  outline-style: dashed;
+  border-radius: 2px;
 }
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+/* h1{
+  font-size: 36px;
 }
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+h2{
+  font-size: 18px;
 }
+h3{
+  font-size: 16px;
+}
+h4{
+  font-size: 14px;
+} */

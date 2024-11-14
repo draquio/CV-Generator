@@ -9,8 +9,23 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        cumstonBlue: "#1c4587",
+        customGreen: "#7fbf4d",
+        customRed: "#ff6473",
+        customGray: "#F4F6FF",
+      },
+      borderColor: {
+        borderGray: "#d2d2d2",
+      },
+      fontFamily: {
+        poppins: ['Poppins', 'sans-serif'],
+        roboto: ['Roboto', 'sans-serif'],
+      },
+      margin:{
+        "6px": '6px' 
+      },
+      gap:{
+        "6px":' 6px'
       },
     },
   },

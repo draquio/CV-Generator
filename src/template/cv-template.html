@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CV - {{name}}</title>
+    <!-- <link href="cv-template.css" rel="stylesheet" /> -->
+    <!-- <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    /> -->
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body>
+    <div
+      class="w-[210mm] h-[297mm] mx-auto bg-white flex flex-col gap-y-5 font-roboto"
+    >
+      <section class="text-center flex flex-col">
+        <h1 class="text-5xl font-bold text-blue-900">{{name}}</h1>
+        <h2 class="text-xl font-bold text-slate-800">{{title}}</h2>
+        <hr class="border my-1" />
+        <div class="flex gap-x-2 justify-center text-lg">
+          <p>{{contact.email}}</p>
+          <p>|</p>
+          <p>{{contact.number}}</p>
+          <p>|</p>
+          <p>{{contact.city}}</p>
+          {{#each contact.web}}
+          <div class="flex gap-x-2">
+            <span>|</span>
+            <a
+              class="text-blue-900 border-b border-blue-900"
+              target="_blank"
+              href="{{this.link}}"
+              >{{this.title}}</a
+            >
+          </div>
+          {{/each}}
+        </div>
+      </section>
+
+      <!-- Perfil profesional -->
+      <section>
+        <h3 class="font-bold text-blue-900 text-xl">PERFIL PROFESIONAL</h3>
+        <p class="text-lg">{{profile}}</p>
+      </section>
+
+      <!-- Formacion academica -->
+      {{#if education.length}}
+      <section>
+        <h3 class="font-bold text-blue-900 text-xl">FORMACIÓN ACADÉMICA</h3>
+        <ul class="list-disc pl-6 text-lg">
+          {{#each education}}
+          <li>
+            <span class="mr-1 text-slate-800">{{this.title}}</span>
+            <span>{{this.years}}</span>
+          </li>
+          {{/each}}
+        </ul>
+      </section>
+      {{/if}}
+
+      <!-- Experiencia Profesional -->
+      {{#if experience.length}}
+      <section>
+        <h3 class="font-bold text-blue-900 text-xl">EXPERIENCIA PROFESIONAL</h3>
+        {{#each experience}}
+        <div class="mb-1 text-lg">
+          <h4 class="font-bold text-slate-800">{{this.title}}</h4>
+          <p>{{this.content}}</p>
+          <p class="italic text-xs">
+            <b class="mr-[2px] text-slate-800">Tecnologías:</b>
+            {{this.technologies}}
+          </p>
+        </div>
+        {{/each}}
+      </section>
+      {{/if}}
+
+      <!-- Habilidades -->
+      {{#if skill.length}}
+      <section>
+        <h3 class="font-bold text-blue-900 text-xl">HABILIDADES</h3>
+        <ul class="list-disc pl-6 text-lg">
+          {{#each skill}}
+          <li>
+            <b class="mr-[2px] text-slate-800">{{this.title}}:</b>
+            {{this.content}}
+          </li>
+          {{/each}}
+        </ul>
+      </section>
+      {{/if}}
+
+      <!-- Proyectos -->
+      {{#if project.length}}
+      <section>
+        <h3 class="font-bold text-blue-900 text-xl">PROYECTOS</h3>
+        {{#each project}}
+        <div class="mb-2 text-lg">
+          <div>
+            <a href="{{this.link}}" target="_blank">
+              <span class="border-b mx-0 px-0 border-slate-800 text-slate-800 font-bold">{{this.title}}.-</span>
+            </a>
+            <span>{{this.content}}</span>
+          </div>
+        </div>
+        {{/each}}
+      </section>
+      {{/if}}
+
+
+    </div>
+  </body>
+</html>
