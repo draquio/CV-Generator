@@ -1,5 +1,5 @@
 "use client";
-import { PreviewCV } from '@/pages/PreviewCV'
+import PreviewCV from '@/pages/PreviewCV'
 import React from 'react'
 
 const PreviewPage = () => {

@@ -135,4 +135,4 @@ const PreviewCV = () => {
   );
 };
 
-export { PreviewCV };
+export default PreviewCV;

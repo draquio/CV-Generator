@@ -27,4 +27,4 @@ const CreateCV = () => {
   );
 };
 
-export { CreateCV };
+export default CreateCV ;

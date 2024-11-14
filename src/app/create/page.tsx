@@ -1,6 +1,6 @@
 "use client";
 
-import { CreateCV } from "@/pages/CreateCV";
+import CreateCV  from "@/pages/CreateCV";
 
 const CreatePage = () => {
   return <CreateCV />;
