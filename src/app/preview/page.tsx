@@ -1,11 +1,11 @@
 "use client";
 import dynamic from 'next/dynamic';
-const PreviewCV2 = dynamic(() => import('../../pages/PreviewCV2'), { ssr: false });
+const PreviewCV = dynamic(() => import('@/components/PreviewCV'), { ssr: false });
 import React from 'react'
 
 const PreviewPage = () => {
   return (
-    <PreviewCV2 />
+    <PreviewCV />
   )
 }
 
