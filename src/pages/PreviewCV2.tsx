@@ -1,3 +1,4 @@
+"use client";
 import { CvPDF } from "@/components/CvPDF";
 import { useCvStore } from "@/hooks/useCvStore";
 import { PDFViewer } from "@react-pdf/renderer";
