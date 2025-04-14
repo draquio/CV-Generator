@@ -13,15 +13,3 @@ div:focus, span:focus, p:focus, h1:focus, h2:focus, h3:focus, h4:focus {
   outline-style: dashed;
   border-radius: 2px;
 }
-/* h1{
-  font-size: 36px;
-}
-h2{
-  font-size: 18px;
-}
-h3{
-  font-size: 16px;
-}
-h4{
-  font-size: 14px;
-} */
