@@ -1,6 +1,9 @@
+"use client";
 import { CvPDF } from "@/components/CvPDF";
 import { ICVData } from "@/interfaces/interface";
 import { pdf } from "@react-pdf/renderer";
+
+
 
 export const downloadPdf = async (cvData: ICVData) => {
   try {
