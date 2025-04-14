@@ -1,11 +1,12 @@
+"use client";
 import { ICVData } from "@/interfaces/interface";
 import { styles } from "@/styles/pdfstyles";
 import { Document, Link, Page, Text, View } from "@react-pdf/renderer";
 
 interface CvPDFProps {
-    cvData: ICVData;
-  }
-export const CvPDF: React.FC<CvPDFProps> = ({ cvData }) => {
+  cvData: ICVData;
+}
+export const CvPDF = ({ cvData }: CvPDFProps) => {
   const {
     contact,
     education,
@@ -18,7 +19,7 @@ export const CvPDF: React.FC<CvPDFProps> = ({ cvData }) => {
   } = cvData;
   return (
     <Document>
-      <Page size="A4" style={styles.page} >
+      <Page size="A4" style={styles.page}>
         {/* Sección de encabezado */}
         <View style={styles.section_name}>
           <Text style={styles.name}>{name}</Text>

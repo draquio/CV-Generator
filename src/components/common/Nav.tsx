@@ -1,9 +1,21 @@
 "use client"
-import { downloadPdf } from "@/helpers/functions";
 import { useCvStore } from "@/hooks/useCvStore";
 import Link from "next/link"
+import { downloadPdf } from "@/helpers/functions";
 
 const Nav = () => {
+  //   try {
+  //     const blob = await pdf(<CvPDF cvData={cvData} />).toBlob();
+  //     const url = URL.createObjectURL(blob);
+  //     const a = document.createElement("a");
+  //     a.href = url;
+  //     a.download = cvData.name + "_CV.pdf";
+  //     a.click();
+  //     URL.revokeObjectURL(url);
+  //   } catch (error) {
+  //     console.error("Error generando el PDF:", error);
+  //   }
+  // };
   const cvData = useCvStore((state) => state.cvData);
   return (
     <nav className="flex justify-between h-10 items-center">
