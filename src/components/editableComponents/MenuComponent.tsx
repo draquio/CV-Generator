@@ -10,7 +10,9 @@ const MenuComponent = () => {
 
 
   const addWeb = () => {
+    if(localWebs.length > 3) return;
     const newWeb: IWeb = {
+      id: crypto.randomUUID(),
       title: "Nueva web",
       link: "https://draquioportfolio.vercel.app/",
     };
@@ -30,8 +32,9 @@ const MenuComponent = () => {
     setLocalWebs(updatedWebs);
     updateWeb(index, field, value); // Usamos updateWeb en lugar de updateContact
   };
+
   return (
-    <div className="flex gap-x-2 justify-center relative">
+    <div className="flex gap-x-2 justify-center relative text-sm">
       <div
         contentEditable
         suppressContentEditableWarning

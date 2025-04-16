@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { cvDataLocal } from "@/data/Data";
+import { persist } from "zustand/middleware";
 import {
   IContact,
   ICVData,
@@ -27,56 +28,66 @@ interface CvStore {
   updateSkill: (index: number, field: keyof ISkill, value: string) => void;
   updateProject: (index: number, field: keyof IProject, value: string) => void;
   updateWeb: (index: number, field: keyof IWeb, value: string) => void;
+  resetCvData: () => void;
 }
 
-export const useCvStore = create<CvStore>((set) => ({
-  cvData: cvDataLocal,
-  setCvData: (newData) =>
-    set((state) => ({ cvData: { ...state.cvData, ...newData } })),
-  updateField: (field, value) =>
-    set((state) => ({ cvData: { ...state.cvData, [field]: value } })),
-  updateContact: (field, value) =>
-    set((state) => ({
-      cvData: {
-        ...state.cvData,
-        contact: { ...state.cvData.contact, [field]: value },
-      },
-    })),
-  updateExperience: (index, field, value) =>
-    set((state) => {
-      const updatedExperience = [...state.cvData.experience];
-      updatedExperience[index][field] = value;
-      return { cvData: { ...state.cvData, experience: updatedExperience } };
+export const useCvStore = create<CvStore>()(
+  persist(
+    (set) => ({
+      cvData: cvDataLocal,
+      setCvData: (newData) =>
+        set((state) => ({ cvData: { ...state.cvData, ...newData } })),
+      updateField: (field, value) =>
+        set((state) => ({ cvData: { ...state.cvData, [field]: value } })),
+      updateContact: (field, value) =>
+        set((state) => ({
+          cvData: {
+            ...state.cvData,
+            contact: { ...state.cvData.contact, [field]: value },
+          },
+        })),
+      updateExperience: (index, field, value) =>
+        set((state) => {
+          const updatedExperience = [...state.cvData.experience];
+          updatedExperience[index][field] = value;
+          return { cvData: { ...state.cvData, experience: updatedExperience } };
+        }),
+      updateEducation: (index, field, value) =>
+        set((state) => {
+          const updatedEducation = [...state.cvData.education];
+          updatedEducation[index][field] = value;
+          return { cvData: { ...state.cvData, education: updatedEducation } };
+        }),
+      updateSkill: (index, field, value) =>
+        set((state) => {
+          const updatedSkills = [...state.cvData.skill];
+          updatedSkills[index][field] = value;
+          return { cvData: { ...state.cvData, skill: updatedSkills } };
+        }),
+      updateProject: (index, field, value) =>
+        set((state) => {
+          const updatedProjects = [...state.cvData.project];
+          updatedProjects[index][field] = value;
+          return { cvData: { ...state.cvData, project: updatedProjects } };
+        }),
+      updateWeb: (index, field, value) =>
+        set((state) => {
+          const updatedWeb = [...state.cvData.contact.web];
+          updatedWeb[index][field] = value;
+          return {
+            cvData: {
+              ...state.cvData,
+              contact: { ...state.cvData.contact, web: updatedWeb },
+            },
+          };
+        }),
+        resetCvData: () => {
+          localStorage.removeItem("cv-data");
+          set(() => ({ cvData: cvDataLocal }));
+        }
     }),
-  updateEducation: (index, field, value) =>
-    set((state) => {
-      console.log("index:", index, "field:", field, "value:", value);
-
-      const updatedEducation = [...state.cvData.education];
-      updatedEducation[index][field] = value;
-      return { cvData: { ...state.cvData, education: updatedEducation } };
-    }),
-  updateSkill: (index, field, value) =>
-    set((state) => {
-      const updatedSkills = [...state.cvData.skill];
-      updatedSkills[index][field] = value;
-      return { cvData: { ...state.cvData, skills: updatedSkills } };
-    }),
-  updateProject: (index, field, value) =>
-    set((state) => {
-      const updatedProjects = [...state.cvData.project];
-      updatedProjects[index][field] = value;
-      return { cvData: { ...state.cvData, project: updatedProjects } };
-    }),
-  updateWeb: (index, field, value) =>
-    set((state) => {
-      const updatedWeb = [...state.cvData.contact.web];
-      updatedWeb[index][field] = value;
-      return {
-        cvData: {
-          ...state.cvData,
-          contact: { ...state.cvData.contact, web: updatedWeb },
-        },
-      };
-    }),
-}));
+    {
+      name: "cv-data",
+    }
+  )
+);

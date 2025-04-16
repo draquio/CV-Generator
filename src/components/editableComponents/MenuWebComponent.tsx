@@ -2,6 +2,7 @@
 import { IWeb } from "@/interfaces/interface";
 import { useState } from "react";
 import { DeleteIcon } from "../common/Icons";
+
 interface IProps {
   handleUpdate: (index: number, field: keyof IWeb, value: string) => void;
   removeWeb: (index: number) => void;

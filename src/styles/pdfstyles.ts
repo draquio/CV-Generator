@@ -56,13 +56,13 @@ export const styles = StyleSheet.create({
   listWeb: {
     display: "flex",
     flexDirection: "row",
-    fontSize: 12,
+    fontSize: 10,
     marginBottom: 2,
     marginTop: -7,
     justifyContent: "center",
   },
   text: {
-    fontSize: 12,
+    fontSize: 10,
     marginBottom: 2,
   },
   list: {

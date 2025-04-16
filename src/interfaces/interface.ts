@@ -16,28 +16,34 @@ export interface IContact {
 }
 
 export interface IWeb{
+  id: string;
   title: string;
   link?: string;
 }
 
 export interface IEducation {
+  id: string;
   title: string;
   years?: string;
 }
 
 export interface IExperience {
+  id: string;
   title: string;
   content: string;
   technologies?: string;
 }
 
 export interface ISkill {
+  id: string;
   title: string;
   content: string;
 }
 
 export interface IProject {
+  id: string;
   title: string;
   link?: string;
   content: string;
 }
+

@@ -13,12 +13,12 @@ const config: Config = {
         customGreen: "#7fbf4d",
         customRed: "#ff6473",
         customGray: "#F4F6FF",
+        customOrange: "#ff8300"
       },
       borderColor: {
         borderGray: "#d2d2d2",
       },
       fontFamily: {
-        poppins: ['Poppins', 'sans-serif'],
         roboto: ['Roboto', 'sans-serif'],
       },
       margin:{
@@ -26,7 +26,7 @@ const config: Config = {
       },
       gap:{
         "6px":' 6px'
-      },
+      }
     },
   },
   plugins: [],

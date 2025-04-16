@@ -117,6 +117,18 @@ export const CvPDF = ({ cvData }: CvPDFProps) => {
             ))}
           </View>
         )}
+
+        <Text
+          style={{
+            fontSize: 0.1,
+            color: "white",
+            position: "absolute",
+            bottom: 0,
+            left: 0,
+          }}
+        >
+          META:{JSON.stringify(cvData)}
+        </Text>
       </Page>
     </Document>
   );
