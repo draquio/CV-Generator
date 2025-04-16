@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { cvDataLocal } from "@/data/Data";
-import { persist } from "zustand/middleware";
+import { createJSONStorage, persist } from "zustand/middleware";
 import {
   IContact,
   ICVData,
@@ -10,6 +10,7 @@ import {
   ISkill,
   IWeb,
 } from "@/interfaces/interface";
+
 interface CvStore {
   cvData: ICVData;
   setCvData: (cvData: Partial<ICVData>) => void;
@@ -88,6 +89,9 @@ export const useCvStore = create<CvStore>()(
     }),
     {
       name: "cv-data",
+      storage: createJSONStorage(() => localStorage),
     }
   )
 );
+
+

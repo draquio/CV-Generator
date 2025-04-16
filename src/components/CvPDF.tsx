@@ -17,6 +17,7 @@ export const CvPDF = ({ cvData }: CvPDFProps) => {
     skill,
     profile,
   } = cvData;
+  const encoded = Buffer.from(JSON.stringify(cvData)).toString("base64");
   return (
     <Document>
       <Page size="A4" style={styles.page}>
@@ -122,12 +123,9 @@ export const CvPDF = ({ cvData }: CvPDFProps) => {
           style={{
             fontSize: 0.1,
             color: "white",
-            position: "absolute",
-            bottom: 0,
-            left: 0,
           }}
         >
-          META:{JSON.stringify(cvData)}
+          META:{JSON.stringify(encoded)}
         </Text>
       </Page>
     </Document>

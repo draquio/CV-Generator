@@ -19,10 +19,6 @@ export const downloadPdf = async (cvData: ICVData) => {
     console.error("Error generando el PDF:", error);
   }
 };
-
-
-
-
 export const extractCvDataFromPdf = async (file: File) => {
   const arrayBuffer = await file.arrayBuffer();
   const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
