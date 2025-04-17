@@ -8,9 +8,8 @@ import { SkillComponent } from "@/components/editableComponents/SkillComponent";
 import { TitleComponent } from "@/components/editableComponents/TitleComponent";
 const CreateCV = () => {
   return (
-    <div className="bg-white w-[260mm] mx-auto rounded-xl shadow-lg py-10"
-    >
-    <div className="w-[210mm] min-h-[297mm] p-2 mx-auto flex flex-col gap-y-5 rounded-xl">
+    <div className="bg-white mx-auto rounded-xl shadow-lg py-4">
+      <div className="w-[210mm] mx-auto flex flex-col gap-y-5 rounded-xl">
         <section className="text-center flex flex-col">
           <NameComponent />
           <TitleComponent />
@@ -27,4 +26,4 @@ const CreateCV = () => {
   );
 };
 
-export default CreateCV ;
+export default CreateCV;

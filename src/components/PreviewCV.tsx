@@ -8,7 +8,7 @@ const PreviewCV = () => {
   const cvData = useCvStore((state) => state.cvData);
   
   return (
-    <PDFViewer style={{ width: "100%", height: "100vh" }} showToolbar={false}>
+    <PDFViewer style={{ width: "100%", height: "100dvh" }} showToolbar={false}>
       <CvPDF cvData={cvData} />
     </PDFViewer>
   );

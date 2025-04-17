@@ -2,9 +2,12 @@
 import { CvPDF } from "@/components/CvPDF";
 import { ICVData } from "@/interfaces/interface";
 import { pdf } from "@react-pdf/renderer";
+import { getDocument, type PDFDocumentProxy } from "pdfjs-dist";
+import type { TextItem } from "pdfjs-dist/types/src/display/api";
 import * as pdfjsLib from "pdfjs-dist";
-import { TextItem } from "pdfjs-dist/types/src/display/api";
-
+import { useCvStore } from "@/hooks/useCvStore";
+pdfjsLib.GlobalWorkerOptions.workerSrc = "/js/pdf.worker.min.mjs";
+import { toast } from "sonner";
 
 export const downloadPdf = async (cvData: ICVData) => {
   try {
@@ -15,30 +18,60 @@ export const downloadPdf = async (cvData: ICVData) => {
     a.download = cvData.name + "_CV.pdf";
     a.click();
     URL.revokeObjectURL(url);
-  } catch (error) {
-    console.error("Error generando el PDF:", error);
+    toast.success("CV descargado correctamente");
+  } catch {
+    toast.error("CV descargado correctamente");
   }
 };
-export const extractCvDataFromPdf = async (file: File) => {
-  const arrayBuffer = await file.arrayBuffer();
-  const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
-  const page = await pdf.getPage(1);
-  const content = await page.getTextContent();
 
-  const fullText = content.items
-    .filter((item): item is TextItem => "str" in item)
-    .map((item) => item.str)
-    .join(" ");
+export const extractCvDataFromPdf = async (
+  file: File
+): Promise<string | null> => {
+  try {
+    const arrayBuffer = await file.arrayBuffer();
+    const pdf: PDFDocumentProxy = await getDocument({ data: arrayBuffer })
+      .promise;
 
-  const match = fullText.match(/META:(\{.*\})/);
+    let fullText = "";
 
-  if (match && match[1]) {
-    try {
-      return JSON.parse(match[1]);
-    } catch {
-      throw new Error("JSON malformado en el PDF");
+    for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+      const page = await pdf.getPage(pageNum);
+      const content = await page.getTextContent();
+      const pageText = content.items
+        .map((item) => {
+          if ("str" in item) {
+            return (item as TextItem).str;
+          }
+          return "";
+        })
+        .join(" ");
+      fullText += pageText;
     }
+    const match = fullText.match(/META:\s*"?([A-Za-z0-9+/=]+)"?/);
+    if (!match) return null;
+    const base64Text = match[1];
+    const decodedText = decodeURIComponent(
+      Array.prototype.map
+        .call(
+          atob(base64Text),
+          (c: string) => `%${c.charCodeAt(0).toString(16).padStart(2, "0")}`
+        )
+        .join("")
+    );
+    return decodedText;
+  } catch {
+    return null;
   }
+};
 
-  throw new Error("No se encontró ningún dato incrustado en el PDF");
+export const handlePdfImport = async (file: File) => {
+  const jsonText = await extractCvDataFromPdf(file);
+  if (!jsonText) return false;
+  try {
+    const parsed: ICVData = JSON.parse(jsonText);
+    useCvStore.getState().setCvData(parsed);
+    return true;
+  } catch {
+    return false;
+  }
 };

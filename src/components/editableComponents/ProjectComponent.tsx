@@ -60,54 +60,6 @@ const ProjectComponent = () => {
       >
         PROYECTOS
       </h3>
-      {/* {localProjects.map((project, index) => (
-        <div key={index} className="flex flex-col items-start relative gap-y-[2px]">
-          <div className="flex gap-x-2">
-            <div
-              contentEditable
-              suppressContentEditableWarning
-              className="font-bold bg-customGray"
-              onBlur={(e) =>
-                handleUpdate(index, "title", e.currentTarget.innerText)
-              }
-            >
-              {project.title}
-            </div>
-
-            {project.link && (
-              <div
-                contentEditable
-                suppressContentEditableWarning
-                className=" bg-customGray px-1"
-                onBlur={(e) =>
-                  handleUpdate(index, "link", e.currentTarget.innerText)
-                }
-              >
-                {project.link}
-              </div>
-            )}
-          </div>
-          <div
-            className="mb-2 bg-customGray"
-            contentEditable
-            suppressContentEditableWarning
-            onBlur={(e) =>
-              handleUpdate(index, "content", e.currentTarget.innerText)
-            }
-          >
-            {project.content}
-          </div>
-
-          <button
-            className="absolute -left-8 bg-customRed text-white p-1 rounded-md text-sm"
-            onClick={() => removeProject(index)}
-          >
-            <span>
-              <DeleteIcon />
-            </span>
-          </button>
-        </div>
-      ))} */}
       <DragDropContext onDragEnd={handleDragEnd}>
         <Droppable droppableId="project">
           {(provided) => (
