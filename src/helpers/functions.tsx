@@ -2,11 +2,8 @@
 import { CvPDF } from "@/components/CvPDF";
 import { ICVData } from "@/interfaces/interface";
 import { pdf } from "@react-pdf/renderer";
-import { getDocument, type PDFDocumentProxy } from "pdfjs-dist";
-import type { TextItem } from "pdfjs-dist/types/src/display/api";
-import * as pdfjsLib from "pdfjs-dist";
+import type { PDFDocumentProxy, TextItem, TextMarkedContent } from "pdfjs-dist/types/src/display/api";
 import { useCvStore } from "@/hooks/useCvStore";
-pdfjsLib.GlobalWorkerOptions.workerSrc = "/js/pdf.worker.min.mjs";
 import { toast } from "sonner";
 
 export const downloadPdf = async (cvData: ICVData) => {
@@ -28,6 +25,12 @@ export const extractCvDataFromPdf = async (
   file: File
 ): Promise<string | null> => {
   try {
+    const pdfjsLib = await import("pdfjs-dist/build/pdf");
+    const { getDocument } = await import("pdfjs-dist");
+    pdfjsLib.GlobalWorkerOptions.workerSrc = "/js/pdf.worker.min.mjs";
+
+
+
     const arrayBuffer = await file.arrayBuffer();
     const pdf: PDFDocumentProxy = await getDocument({ data: arrayBuffer })
       .promise;
@@ -38,7 +41,7 @@ export const extractCvDataFromPdf = async (
       const page = await pdf.getPage(pageNum);
       const content = await page.getTextContent();
       const pageText = content.items
-        .map((item) => {
+        .map((item: TextItem | TextMarkedContent) => {
           if ("str" in item) {
             return (item as TextItem).str;
           }

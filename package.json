@@ -12,9 +12,10 @@
     "@hello-pangea/dnd": "^16.3.0",
     "@react-pdf/renderer": "4.1.6",
     "next": "14.2.15",
-    "pdfjs-dist": "^4.8.69",
+    "pdfjs-dist": "^3.9.179",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-loading-skeleton": "^3.5.0",
     "sonner": "^2.0.3",
     "zustand": "5.0.3"
   },

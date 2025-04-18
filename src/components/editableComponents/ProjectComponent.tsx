@@ -1,6 +1,5 @@
 import { useCvStore } from "@/hooks/useCvStore";
 import { IProject } from "@/interfaces/interface";
-import React, { useState } from "react";
 import { DeleteIcon, PlusIcon, MoveIcon } from "../common/Icons";
 import {
   DragDropContext,
@@ -10,10 +9,8 @@ import {
 } from "@hello-pangea/dnd";
 
 const ProjectComponent = () => {
-  const { cvData, setCvData, updateProject } = useCvStore();
-  const [localProjects, setLocalProjects] = useState<IProject[]>(
-    cvData.project
-  );
+  const { cvData, setCvData } = useCvStore();
+  const projects = cvData.project;
 
   const addProject = () => {
     const newProject: IProject = {
@@ -22,32 +19,27 @@ const ProjectComponent = () => {
       content: "Descripción del proyecto",
       link: "URL (opcional)",
     };
-    const updatedLocalProjects = [...localProjects, newProject];
-    setLocalProjects(updatedLocalProjects);
-    setCvData({ project: updatedLocalProjects });
+    setCvData({ project: [...projects, newProject] });
   };
   const removeProject = (index: number) => {
-    const updatedLocalProjects = [...localProjects];
-    updatedLocalProjects.splice(index, 1);
-    setLocalProjects(updatedLocalProjects);
-    setCvData({ project: updatedLocalProjects });
+    const updated = [...projects];
+    updated.splice(index, 1);
+    setCvData({ project: updated });
   };
   const handleUpdate = (
     index: number,
     field: keyof IProject,
     value: string
   ) => {
-    updateProject(index, field, value);
-    const updatedProjects = [...localProjects];
-    updatedProjects[index][field] = value;
-    setLocalProjects(updatedProjects);
+    const updated = [...projects];
+    updated[index] = { ...updated[index], [field]: value };
+    setCvData({ project: updated });
   };
   const handleDragEnd = (result: DropResult) => {
     if (!result.destination) return;
-    const reordered = Array.from(localProjects);
+    const reordered = [...projects];
     const [moved] = reordered.splice(result.source.index, 1);
     reordered.splice(result.destination.index, 0, moved);
-    setLocalProjects(reordered);
     setCvData({ project: reordered });
   };
 
@@ -55,7 +47,7 @@ const ProjectComponent = () => {
     <div className="relative">
       <h3
         className={`font-bold ${
-          localProjects.length > 0 ? "text-cumstonBlue" : "text-gray-300"
+          projects.length > 0 ? "text-cumstonBlue" : "text-gray-300"
         }`}
       >
         PROYECTOS
@@ -68,7 +60,7 @@ const ProjectComponent = () => {
               {...provided.droppableProps}
               className="space-y-[2px] outline-customColor"
             >
-              {localProjects.map((project, index) => (
+              {projects.map((project, index) => (
                 <Draggable
                   key={project.id}
                   draggableId={project.id}

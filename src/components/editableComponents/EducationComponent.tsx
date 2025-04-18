@@ -1,8 +1,8 @@
 import { useCvStore } from "@/hooks/useCvStore";
 import { IEducation } from "@/interfaces/interface";
-import React, { useState } from "react";
+import React from "react";
 import { DeleteIcon, PlusIcon, MoveIcon } from "../common/Icons";
-
+import "react-loading-skeleton/dist/skeleton.css";
 import {
   DragDropContext,
   Draggable,
@@ -13,26 +13,22 @@ import {
 } from "@hello-pangea/dnd";
 
 const EducationComponent = () => {
-  const { cvData, updateEducation, setCvData } = useCvStore();
-  const [localEducation, setLocalEducation] = useState<IEducation[]>(
-    cvData.education
-  );
+  const { cvData, setCvData } = useCvStore();
+  const education = cvData.education;
+
   const addEducation = () => {
-    const newEducation = {
+    const newEducation: IEducation = {
       id: crypto.randomUUID(),
       title: "Carrera, curso, certificación, etc.",
       years: "Desde - Hasta",
     };
-    const updatedLocalEducation = [...localEducation, newEducation];
-    setLocalEducation(updatedLocalEducation);
-    setCvData({ education: updatedLocalEducation });
+    setCvData({ education: [...education, newEducation] });
   };
 
   const removeEducation = (index: number) => {
-    const updatedLocalEducation = [...localEducation];
-    updatedLocalEducation.splice(index, 1);
-    setLocalEducation(updatedLocalEducation);
-    setCvData({ education: updatedLocalEducation });
+    const updated = [...education];
+    updated.splice(index, 1);
+    setCvData({ education: updated });
   };
 
   const handleUpdate = (
@@ -40,27 +36,23 @@ const EducationComponent = () => {
     field: keyof IEducation,
     value: string
   ) => {
-    updateEducation(index, field, value);
-    const updatedEducation = [...localEducation];
-    updatedEducation[index][field] = value;
-    setLocalEducation(updatedEducation);
+    const updated = [...education];
+    updated[index] = { ...updated[index], [field]: value };
+    setCvData({ education: updated });
   };
 
   const handleDragEnd = (result: DropResult) => {
     if (!result.destination) return;
-    const items = Array.from(localEducation);
-    const [reorderedItem] = items.splice(result.source.index, 1);
-    items.splice(result.destination.index, 0, reorderedItem);
-
-    setLocalEducation(items);
-    setCvData({ education: items });
+    const reordered = Array.from(education);
+    const [moved] = reordered.splice(result.source.index, 1);
+    reordered.splice(result.destination.index, 0, moved);
+    setCvData({ education: reordered });
   };
-
   return (
     <div className="relative ">
       <h3
         className={`font-bold ${
-          localEducation.length > 0 ? "text-cumstonBlue" : "text-gray-300"
+          education.length > 0 ? "text-cumstonBlue" : "text-gray-300"
         }`}
       >
         FORMACIÓN ACADÉMICA
@@ -73,12 +65,12 @@ const EducationComponent = () => {
               {...provided.droppableProps}
               className="list-disc pl-6 space-y-[2px] outline-customColor"
             >
-              {localEducation.map((item, index) => (
+              {education.map((item, index) => (
                 <Draggable key={item.id} draggableId={item.id} index={index}>
                   {(provided: DraggableProvided, snapshot): React.ReactNode => (
                     <li
                       ref={provided.innerRef}
-                      {...provided.draggableProps} 
+                      {...provided.draggableProps}
                       className={`relative transition-opacity duration-100 ${
                         snapshot.isDragging ? "opacity-50" : "opacity-100"
                       }`}

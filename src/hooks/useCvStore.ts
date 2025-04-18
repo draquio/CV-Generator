@@ -30,12 +30,23 @@ interface CvStore {
   updateProject: (index: number, field: keyof IProject, value: string) => void;
   updateWeb: (index: number, field: keyof IWeb, value: string) => void;
   resetCvData: () => void;
+
+  setExperience: (experience: IExperience[]) => void;
+  setEducation: (education: IEducation[]) => void;
+  setSkill: (skill: ISkill[]) => void;
+  setProject: (project: IProject[]) => void;
+
+  hasHydrated: boolean;
+  setHasHydrated: (value: boolean) => void;
 }
 
 export const useCvStore = create<CvStore>()(
   persist(
     (set) => ({
       cvData: cvDataLocal,
+      hasHydrated: false,
+      setHasHydrated: (value: boolean) => set({ hasHydrated: value }),
+
       setCvData: (newData) =>
         set((state) => ({ cvData: { ...state.cvData, ...newData } })),
       updateField: (field, value) =>
@@ -82,16 +93,25 @@ export const useCvStore = create<CvStore>()(
             },
           };
         }),
-        resetCvData: () => {
-          localStorage.removeItem("cv-data");
-          set(() => ({ cvData: cvDataLocal }));
-        }
+      setExperience: (experience: IExperience[]) =>
+        set((state) => ({ cvData: { ...state.cvData, experience } })),
+      setEducation: (education: IEducation[]) =>
+        set((state) => ({ cvData: { ...state.cvData, education } })),
+      setSkill: (skill: ISkill[]) =>
+        set((state) => ({ cvData: { ...state.cvData, skill } })),
+      setProject: (project: IProject[]) =>
+        set((state) => ({ cvData: { ...state.cvData, project } })),
+      resetCvData: () => {
+        localStorage.removeItem("cv-data");
+        set(() => ({ cvData: cvDataLocal }));
+      },
     }),
     {
       name: "cv-data",
       storage: createJSONStorage(() => localStorage),
+      onRehydrateStorage: () => (state) => {
+        state?.setHasHydrated(true);
+      },
     }
   )
 );
-
-
