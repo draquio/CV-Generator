@@ -27,7 +27,7 @@ export const extractCvDataFromPdf = async (
   try {
     const pdfjsLib = await import("pdfjs-dist/build/pdf");
     const { getDocument } = await import("pdfjs-dist");
-    pdfjsLib.GlobalWorkerOptions.workerSrc = "/js/pdf.worker.min.mjs";
+    pdfjsLib.GlobalWorkerOptions.workerSrc = "/js/pdf.worker.min.js";
 
 
 
